@@ -40,7 +40,7 @@ def meandelai(gridstep,xmin,xmax,ymin,ymax,t,z):
     return meandelai
 
 ####display function
-def plotmeandt(gridstep,xmin,xmax,ymin,ymax,timetab,z):#plot the mean time delai for an array of time
+def plotmeandt(gridstep,xmin,xmax,ymin,ymax,timetab,z):#plot the mean time delai for an array of time values
     mdt=[]
     for t in timetab:
         mdt.append(meandelai(gridstep,xmin,xmax,ymin,ymax,t,z))
