@@ -19,7 +19,7 @@ def normint(gridstep,xmin,xmax,ymin,ymax,t,z):
         for y in np.arange(ymin,ymax,gridstep):
             if (x < rt) and (y ** 2 < rt(t) ** 2 - x ** 2):
                 delai=-np.sqrt(rt(t)**2-x**2-y**2)
-                inttot.append(flux(t+delai)/(pi*2*rt(t+delai)**2))
+                inttot.append(flux(t+delai)/(c*pi*2*rt(t+delai)**2))
     tot=np.array(inttot)
     return np.sum(tot)
 
