@@ -10,7 +10,7 @@ def rt(t): #radius of the supernova function of t
 def flux(t):
     magnitude = 2 * 10 ** (-6) * (t - 20) ** 4 - 0.00022 * (t - 20) ** 3 + 0.0077 * (t - 20) ** 2 + 0.0025 * (t - 20) - 19.5
     f = 10 **(magnitude / (-2.5)) * 4000 # equation to transform magnitude into flux, 4000~= zero point for blue 
-    return 
+    return f
 
 #normalisation factor, the integral is computed by taking the sum on all pixels in the chosen grid
 def normint(gridstep,xmin,xmax,ymin,ymax,t,z):
