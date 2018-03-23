@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 axis_font = {'fontname':'Arial', 'size':'18'}
 
 c=1.#unit light day/day
-def rt(t): #radius of the supernova function of t
+def rt(t): #radius of the supernova as a function of t
     rt=10**(-5)+t/30.
     return rt
 def flux(t):
@@ -51,7 +51,7 @@ def plotmeandt(gridstep,xmin,xmax,ymin,ymax,timetab,z):#plot the mean time delai
     plt.ylabel('<$\delta t)$> [ld]',** axis_font)
     plt.show()
 def drawcolormap(gridstep,xmin,xmax,ymin,ymax,t): 
-    #plot the delay map at a given t +return the array containing the values.
+    #draw the delay map at a given t +return the array containing the values.
     dimmapx=int((xmax-xmin)*1./gridstep)
     dimmapy = int((ymax - ymin) * 1. / gridstep)
     delaimap = np.zeros((dimmapx, dimmapy))
