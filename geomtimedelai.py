@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 axis_font = {'fontname':'Arial', 'size':'18'}
 
-
+c=1.#unit light day/day
 def rt(t): #radius of the supernova function of t
     rt=10**(-5)+t/30.
     return rt
@@ -71,7 +71,7 @@ def drawcolormap(gridstep,xmin,xmax,ymin,ymax,t):
 
 if __name__ == '__main__':
     
-    c=1.
+    
     z=1.
     # min and max coordinates of the grid:
     xmax=5
