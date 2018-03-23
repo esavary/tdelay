@@ -1,7 +1,6 @@
 from sympy import *
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.integrate import *
 axis_font = {'fontname':'Arial', 'size':'18'}
 
 
