@@ -8,7 +8,7 @@ def rt(t): #radius of the supernova function of t
     rt=10**(-5)+t/30.
     return rt
 def flux(t):
-    magnitude = 2 * 10 ** (-6) * (t - 20) ** 4 - 0.00022 * (t - 20) ** 3 + 0.0077 * (t - 20) ** 2 + 0.0025 * (t - 20) - 19.5
+    magnitude = 2 * 10 ** (-6) * (t - 20) ** 4 - 0.00022 * (t - 20) ** 3 + 0.0077 * (t - 20) ** 2 + 0.0025 * (t - 20) - 19.5 #approximate fit of a supernova template
     f = 10 **(magnitude / (-2.5)) * 4000 # equation to transform magnitude into flux, 4000~= zero point for blue 
     return f
 
@@ -39,7 +39,7 @@ def meandelai(gridstep,xmin,xmax,ymin,ymax,t,z):
     meandelai=nonormmeandelaiint(gridstep,xmin,xmax,ymin,ymax,t,z)*1./normint(gridstep,xmin,xmax,ymin,ymax,t,z)
     return meandelai
 
-####display
+####display function
 def plotmeandt(gridstep,xmin,xmax,ymin,ymax,timetab,z):#plot the mean time delai for an array of time
     mdt=[]
     for t in timetab:
