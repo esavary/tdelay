@@ -9,7 +9,7 @@ def rt(t): #radius of the supernova function of t
     return rt
 def flux(t):
     magnitude = 2 * 10 ** (-6) * (t - 20) ** 4 - 0.00022 * (t - 20) ** 3 + 0.0077 * (t - 20) ** 2 + 0.0025 * (t - 20) - 19.5 #approximate fit of a supernova template
-    f = 10 **(magnitude / (-2.5)) * 4000 # equation to transform magnitude into flux, 4000~= zero point for blue 
+    f = 10 **(magnitude / (-2.5)) * 4000 # equation to transform magnitude into flux, 4000~= zero point for blue wavelength
     return f
 
 #normalisation factor, the integral is computed by taking the sum on all pixels in the chosen grid
