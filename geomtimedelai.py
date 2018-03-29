@@ -18,20 +18,24 @@ def flux(t):
     magnitude = 2 * 10 ** (-6) * (t - 20) ** 4 - 0.00022 * (t - 20) ** 3 + 0.0077 * (t - 20) ** 2 + 0.0025 * (
     t - 20) - 19.5  # approximate fit of a supernova template
     f = 10 ** (magnitude / (-2.5)) * 4000
+
     # equation to transform magnitude into flux, 4000~= zero point for blue wavelength
 
     return f
 def returncroppedmap(xcut,ycut,xmin, xmax, ymin, ymax,gridstep,nomagnification= False):
+    repetitionfactor=1./gridstep
     if nomagnification==False:
         hdul = fits.open('0106map.fits')
         map=hdul[0].data
-        croppedmap=map[xcut:xcut+(xmax-xmin)/gridstep,ycut:ycut+(ymax-ymin)/gridstep]
+        croppedmap=map[xcut:xcut+(xmax-xmin),ycut:ycut+(ymax-ymin)]
+
     else:
         print 'nomagnification'
         croppedmap=np.ones((xmax-xmin,ymax-ymin))
 
-
-    return np.array(croppedmap)
+    multmapx = np.repeat(np.array(croppedmap),repetitionfactor,axis=1)
+    multmaptot = np.repeat(multmapx, repetitionfactor, axis=0)
+    return multmaptot
 
 
 
@@ -123,24 +127,25 @@ def drawcolormap(gridstep, xmin, xmax, ymin, ymax, t):
 if __name__ == '__main__':
     z = 1.
     # min and max coordinates of the grid:
-    xmax = 5
-    ymax = 5
-    xmin = -5
-    ymin = -5
-    xcut=100
-    ycut=100
+    minmax=5
+    xmax = minmax
+    ymax = minmax
+    xmin = -minmax
+    ymin = -minmax
+    xcut=200
+    ycut=200
     timetab = np.arange(5, 40, 1)
-    gridstep = 0.01
+    gridstep = 0.1
    # plotmeandt(gridstep, xmin, xmax, ymin, ymax,xcut,ycut, timetab,  z)
-    #delaimap = drawcolormap(gridstep, xmin, xmax, ymin, ymax, timetab[32])
-
+    delaimap = drawcolormap(gridstep, xmin, xmax, ymin, ymax, timetab[32])
+ 
     fluxtrue=[]
     modified=[]
 
     for t in timetab:
         fluxtrue.append(flux(t))
-        modified.append(returnmodifiedflux(gridstep, xmin, xmax, ymin, ymax, xcut,ycut,t, z,magnification=False))
+        modified.append(returnmodifiedflux(gridstep, xmin, xmax, ymin, ymax, xcut,ycut,t, z,magnification=True))
     plt.plot(timetab,fluxtrue,label='analytique')
-    plt.plot(timetab, modified, label='modified')
+    plt.plot(timetab, modified, label='modified with magnification')
     plt.legend()
     plt.show()
