@@ -133,9 +133,7 @@ if __name__ == '__main__':
     gridstep = 0.01
    # plotmeandt(gridstep, xmin, xmax, ymin, ymax,xcut,ycut, timetab,  z)
     #delaimap = drawcolormap(gridstep, xmin, xmax, ymin, ymax, timetab[32])
-    #essai=returncroppedmap(100,100, xmin, xmax, ymin, ymax,gridstep)
-    #print np.shape(essai)
-    #print np.shape(delaimap)
+
     fluxtrue=[]
     modified=[]
 
