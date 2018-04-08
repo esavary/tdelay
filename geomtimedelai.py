@@ -47,7 +47,7 @@ def normint(gridstep, xmin, xmax, ymin, ymax,xcut,ycut, t, z):
     for x in np.arange(xmin, xmax, gridstep):
         for y in np.arange(ymin, ymax, gridstep):
             if (x < rt) and (np.power(y,2) < np.power(rt(t),2) - np.power(x,2)):
-                delai = -np.sqrt(np.power(rt(t),2) - np.power(x,2) - np.power(y,2))
+                delai = np.sqrt(np.power(rt(t),2) - np.power(x,2) - np.power(y,2))#positive delai
                 inttot.append(flux(t + delai)*magnificationmap[x,y] / (pi * np.power(rt(t+delai),2)))
     tot = np.array(inttot)
     return np.sum(tot)
@@ -60,7 +60,7 @@ def nonormmeandelaiint(gridstep, xmin, xmax, ymin, ymax,xcut,ycut, t, z):
     for x in np.arange(xmin, xmax, gridstep):
         for y in np.arange(ymin, ymax, gridstep):
             if (x < rt) and (np.power(y,2)< np.power(rt(t),2) - np.power(x,2)):
-                delai = -np.sqrt(np.power(rt(t),2) - np.power(x,2) - np.power(y,2))
+                delai = np.sqrt(np.power(rt(t),2) - np.power(x,2) - np.power(y,2))
                 inttot.append(flux(t + delai) * delai *magnificationmap[x,y]/ (c * pi * 2 * np.power(rt(t+delai),2)))
     tot = np.array(inttot)
     return (1 + z) * np.sum(tot)
@@ -78,14 +78,14 @@ def returnmodifiedflux(gridstep, xmin, xmax, ymin, ymax, xcut,ycut,t, z,magnific
         for x in np.arange(xmin, xmax, gridstep):
             for y in np.arange(ymin, ymax, gridstep):
                 if (x < rt) and (np.power(y,2) < np.power(rt(t),2) - np.power(x,2)):
-                    delai = -np.sqrt(np.power(rt(t),2) - np.power(x,2) - np.power(y,2))
+                    delai = np.sqrt(np.power(rt(t),2) - np.power(x,2) - np.power(y,2))
                     inttot.append(flux(t + delai)*magnificationmap[x,y] / (pi * np.power(rt(t+delai),2)))
         tot = np.array(inttot)*gridstep**2
     else:
         for x in np.arange(xmin, xmax, gridstep):
             for y in np.arange(ymin, ymax, gridstep):
                 if (x < rt) and (np.power(y,2) < np.power(rt(t),2) - np.power(x,2)):
-                    delai = -np.sqrt(np.power(rt(t),2) - np.power(x,2) - np.power(y,2))
+                    delai = np.sqrt(np.power(rt(t),2) - np.power(x,2) - np.power(y,2))
                     inttot.append(flux(t + delai) / (pi * np.power(rt(t+delai),2)))
         tot = np.array(inttot)*gridstep**2
 
@@ -135,16 +135,17 @@ if __name__ == '__main__':
     xcut=200
     ycut=200
     timetab = np.arange(5, 40, 1)
-    gridstep = 0.1
+    gridstep = 0.01
    # plotmeandt(gridstep, xmin, xmax, ymin, ymax,xcut,ycut, timetab,  z)
     delaimap = drawcolormap(gridstep, xmin, xmax, ymin, ymax, timetab[32])
- 
+    essai=returncroppedmap(100,100, xmin, xmax, ymin, ymax,gridstep)
+
     fluxtrue=[]
     modified=[]
 
     for t in timetab:
         fluxtrue.append(flux(t))
-        modified.append(returnmodifiedflux(gridstep, xmin, xmax, ymin, ymax, xcut,ycut,t, z,magnification=True))
+        modified.append(returnmodifiedflux(gridstep, xmin, xmax, ymin, ymax, xcut,ycut,t, z,magnification=False))
     plt.plot(timetab,fluxtrue,label='analytique')
     plt.plot(timetab, modified, label='modified with magnification')
     plt.legend()
