@@ -9,16 +9,18 @@ c = 1.  # unit light day/day
 
 
 def rt(t):  # radius of the supernova as a function of t
-    rt = 10 ** (-5) + t / 30.
+    rt = 10 ** (-5) + (t+20) / 30.
 
     return rt
 
 
 def flux(t):
+    '''
     magnitude = 2 * 10 ** (-6) * (t - 20) ** 4 - 0.00022 * (t - 20) ** 3 + 0.0077 * (t - 20) ** 2 + 0.0025 * (
     t - 20) - 19.5  # approximate fit of a supernova template
     f = 10 ** (magnitude / (-2.5)) * 4000
-
+    '''
+    f=3.94651870932e-07*t**5-0.000113731703456*t**4+0.0111317577292*t**3-0.381176185494*t**2-0.112832155346*t+115.424606424
     # equation to transform magnitude into flux, 4000~= zero point for blue wavelength
 
     return f
@@ -134,8 +136,8 @@ if __name__ == '__main__':
     ymin = -minmax
     xcut=200
     ycut=200
-    timetab = np.arange(5, 40, 1)
-    gridstep = 0.01
+    timetab = np.arange(-5, 20, 0.2)
+    gridstep = 0.02
    # plotmeandt(gridstep, xmin, xmax, ymin, ymax,xcut,ycut, timetab,  z)
     delaimap = drawcolormap(gridstep, xmin, xmax, ymin, ymax, timetab[32])
     essai=returncroppedmap(100,100, xmin, xmax, ymin, ymax,gridstep)
@@ -145,8 +147,15 @@ if __name__ == '__main__':
 
     for t in timetab:
         fluxtrue.append(flux(t))
-        modified.append(returnmodifiedflux(gridstep, xmin, xmax, ymin, ymax, xcut,ycut,t, z,magnification=False))
+        modified.append(returnmodifiedflux(gridstep, xmin, xmax, ymin, ymax, xcut,ycut,t, z,magnification=True))
+
     plt.plot(timetab,fluxtrue,label='analytique')
-    plt.plot(timetab, modified, label='modified with magnification')
+    plt.plot(timetab, modified, label='modified with no magnification')
     plt.legend()
     plt.show()
+    fluxmaxindice=np.argmax(fluxtrue)
+    fluxmaxmodifiedindice=np.argmax(modified)
+    print 'original max:',timetab[fluxmaxindice],' modified max:',timetab[fluxmaxmodifiedindice]
+    np.save('truearray01.npy', fluxtrue, allow_pickle=True, fix_imports=True)
+    np.save('modifiedarray01.npy', modified, allow_pickle=True, fix_imports=True)
+    np.save('timerray01.npy',timetab, allow_pickle=True, fix_imports=True)
